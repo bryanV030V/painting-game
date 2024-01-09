@@ -37,9 +37,17 @@ public class PaintingGame : MonoBehaviour
         }
     }
 
+    public void SaveCanvas(string artworkName)
+    {
+        Texture2D canvasTexture = CaptureCanvas();
+        SaveCanvasAsImage(canvasTexture, artworkName);
+    }
+
+
     void StartPainting()
     {
         paintBrush = Instantiate(paintBrushPrefab, GetMousePosition(), Quaternion.identity);
+        paintBrush.GetComponent<SpriteRenderer>().color = paintColor;
         currentLine = paintBrush.GetComponent<LineRenderer>();
         currentLine.positionCount = 0;
         isPainting = true;
@@ -75,5 +83,40 @@ public class PaintingGame : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
         return mousePos;
+        debug.log(mousePos);
+    }
+
+    Texture2D CaptureCanvas()
+    {
+        // Create a texture to capture the canvas
+        RenderTexture rt = new RenderTexture(Screen.width, Screen.height, 24);
+        Camera.main.targetTexture = rt;
+
+        Texture2D canvasTexture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        Camera.main.Render();
+        RenderTexture.active = rt;
+        canvasTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        canvasTexture.Apply();
+
+        Camera.main.targetTexture = null;
+        RenderTexture.active = null;
+        Destroy(rt);
+
+        return canvasTexture;
+    }
+
+    void SaveCanvasAsImage(Texture2D canvasTexture, string artworkName)
+    {
+        string artworkDirectory = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "Artwork");
+
+        if (!System.IO.Directory.Exists(artworkDirectory))
+        {
+            System.IO.Directory.CreateDirectory(artworkDirectory);
+        }
+
+        string filePath = System.IO.Path.Combine(artworkDirectory, $"{artworkName}.png");
+        System.IO.File.WriteAllBytes(filePath, canvasTexture.EncodeToPNG());
+
+        Debug.Log($"Artwork saved to: {filePath}");
     }
 }
