@@ -3,11 +3,12 @@
 public class PaintingGame : MonoBehaviour
 {
     public GameObject paintBrushPrefab;
-    public Color paintColor = Color.black;
 
     private GameObject paintBrush;
     private LineRenderer currentLine;
     private bool isPainting = false;
+    private Color[] paintColors = { Color.black, Color.red, Color.green, Color.blue }; // Add more colors as needed
+    private int currentColorIndex = 0;
 
     void Update()
     {
@@ -29,12 +30,16 @@ public class PaintingGame : MonoBehaviour
         {
             DeletePaint();
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ChangeColor();
+        }
     }
 
     void StartPainting()
     {
         paintBrush = Instantiate(paintBrushPrefab, GetMousePosition(), Quaternion.identity);
-        paintBrush.GetComponent<SpriteRenderer>().color = paintColor;
         currentLine = paintBrush.GetComponent<LineRenderer>();
         currentLine.positionCount = 0;
         isPainting = true;
@@ -57,6 +62,12 @@ public class PaintingGame : MonoBehaviour
         {
             Destroy(paintBrush);
         }
+    }
+
+    void ChangeColor()
+    {
+        currentColorIndex = (currentColorIndex + 1) % paintColors.Length;
+        paintBrush.GetComponent<SpriteRenderer>().color = paintColors[currentColorIndex];
     }
 
     Vector3 GetMousePosition()
