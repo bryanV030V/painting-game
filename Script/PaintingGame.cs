@@ -7,34 +7,24 @@ public class PaintingGame : MonoBehaviour
     private GameObject paintBrush;
     private LineRenderer currentLine;
     private bool isPainting = false;
-    private Color[] paintColors = { Color.black, Color.red, Color.green, Color.blue }; // Add more colors as needed
+    private Color[] paintColors = { Color.black, Color.red, Color.green, Color.blue };
     private int currentColorIndex = 0;
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
-        {
             StartPainting();
-        }
         else if (Input.GetMouseButtonUp(0))
-        {
             StopPainting();
-        }
 
         if (isPainting)
-        {
             UpdatePainting();
-        }
 
         if (Input.GetKeyDown(KeyCode.Delete))
-        {
             DeletePaint();
-        }
 
         if (Input.GetKeyDown(KeyCode.C))
-        {
             ChangeColor();
-        }
     }
 
     public void SaveCanvas(string artworkName)
@@ -43,11 +33,10 @@ public class PaintingGame : MonoBehaviour
         SaveCanvasAsImage(canvasTexture, artworkName);
     }
 
-
     void StartPainting()
     {
         paintBrush = Instantiate(paintBrushPrefab, GetMousePosition(), Quaternion.identity);
-        paintBrush.GetComponent<SpriteRenderer>().color = paintColor;
+        paintBrush.GetComponent<SpriteRenderer>().color = paintColors[currentColorIndex];
         currentLine = paintBrush.GetComponent<LineRenderer>();
         currentLine.positionCount = 0;
         isPainting = true;
@@ -67,9 +56,7 @@ public class PaintingGame : MonoBehaviour
     void DeletePaint()
     {
         if (paintBrush != null)
-        {
             Destroy(paintBrush);
-        }
     }
 
     void ChangeColor()
@@ -83,12 +70,10 @@ public class PaintingGame : MonoBehaviour
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
         return mousePos;
-        debug.log(mousePos);
     }
 
     Texture2D CaptureCanvas()
     {
-        // Create a texture to capture the canvas
         RenderTexture rt = new RenderTexture(Screen.width, Screen.height, 24);
         Camera.main.targetTexture = rt;
 
@@ -110,9 +95,7 @@ public class PaintingGame : MonoBehaviour
         string artworkDirectory = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "Artwork");
 
         if (!System.IO.Directory.Exists(artworkDirectory))
-        {
             System.IO.Directory.CreateDirectory(artworkDirectory);
-        }
 
         string filePath = System.IO.Path.Combine(artworkDirectory, $"{artworkName}.png");
         System.IO.File.WriteAllBytes(filePath, canvasTexture.EncodeToPNG());
