@@ -42,7 +42,6 @@ Set Button Labels:
 Change the text on the buttons to "Save", "Continue", and "Quit".
 
 Implement the Menu Script
-Create a new C# script named MenuController:
 
 Attach this script to an empty GameObject in your scene.
 
