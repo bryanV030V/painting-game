@@ -65,6 +65,12 @@ public class PaintingGame : MonoBehaviour
         paintBrush.GetComponent<SpriteRenderer>().color = paintColors[currentColorIndex];
     }
 
+    public void SaveCanvasFromMenu()
+    {
+        Texture2D canvasTexture = CaptureCanvas();
+        SaveCanvasAsImage(canvasTexture, "SavedFromMenu");
+    }
+
     Vector3 GetMousePosition()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
