@@ -31,6 +31,15 @@ Attach the "MusicPlayer" script to the GameObject with the InputField and AudioS
 Now, when you run the game, users can paste the music file path or URL into the InputField, and the music will play using the AudioSource. Note that this script uses UnityWebRequest to load audio from a URL. If you want to load local files, you may need to adjust the code accordingly. Also, ensure that you have the necessary permissions to access the audio file, especially when dealing with web URLs.
 
 ============================================================================================
+Create the Menu UI
+Create Canvas and UI Components:
+
+In Unity's Hierarchy panel, right-click and select UI -> Canvas.
+Inside the Canvas, right-click and select UI -> Panel. This will serve as the main panel for the menu.
+Create three buttons within the panel: one for saving, one for continuing, and one for quitting.
+Set Button Labels:
+
+Change the text on the buttons to "Save", "Continue", and "Quit".
 
 Implement the Menu Script
 Create a new C# script named MenuController:
