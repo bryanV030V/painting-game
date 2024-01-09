@@ -17,7 +17,7 @@ Set the "Paint Brush Prefab" field in the "PaintingGame" script to the "PaintBru
 
 Now, you can run the game, and the paintbrush will follow the movement of the mouse. Left-click to start painting, release the mouse button to stop painting, and press the "Delete" key to delete the paint on the canvas. Adjust the script and add more features as needed for your game.
 
-==============================================================================================================================================================
+====================================================================================================
 
 To play music that the user pasted into an input box, you can use Unity's InputField UI element to get the path or URL of the music file. Then, you can use an AudioSource component to play the music. Here's a simple script to get you started:
 
