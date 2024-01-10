@@ -31,6 +31,7 @@ Attach the "MusicPlayer" script to the GameObject with the InputField and AudioS
 Now, when you run the game, users can paste the music file path or URL into the InputField, and the music will play using the AudioSource. Note that this script uses UnityWebRequest to load audio from a URL. If you want to load local files, you may need to adjust the code accordingly. Also, ensure that you have the necessary permissions to access the audio file, especially when dealing with web URLs.
 
 ============================================================================
+
 Create the Menu UI
 Create Canvas and UI Components:
 
